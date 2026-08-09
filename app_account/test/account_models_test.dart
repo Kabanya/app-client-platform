@@ -5,9 +5,14 @@ void main() {
   test('exports canonical account contract constants', () {
     expect(AccountAppId.values, contains(AccountAppId.nottica));
     expect(AccountAppId.values, contains(AccountAppId.pomodoist));
+    expect(AccountAppId.values, contains(AccountAppId.caloriecalc));
     expect(AccountQuotaKey.values, contains(AccountQuotaKey.aiCredits));
     expect(
         AccountQuotaKey.values, contains(AccountQuotaKey.voiceTranscriptions));
+    expect(
+      AccountQuotaKey.values,
+      contains(AccountQuotaKey.photoCredits),
+    );
     expect(AccountSyncContract.schemaVersion, 1);
   });
 

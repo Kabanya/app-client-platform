@@ -3,17 +3,20 @@ typedef JsonMap = Map<String, Object?>;
 abstract final class AccountAppId {
   static const pomodoist = 'pomodoist';
   static const nottica = 'nottica';
+  static const caloriecalc = 'caloriecalc';
 
-  static const values = <String>{pomodoist, nottica};
+  static const values = <String>{pomodoist, nottica, caloriecalc};
 }
 
 abstract final class AccountQuotaKey {
   static const aiCredits = 'ai_credits';
   static const voiceTranscriptions = 'voice_transcriptions';
+  static const photoCredits = 'photo_credits';
 
   static const values = <String>{
     aiCredits,
     voiceTranscriptions,
+    photoCredits,
   };
 }
 
