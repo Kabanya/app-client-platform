@@ -1,0 +1,41 @@
+name: Client validation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out candidate
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@1508160852fb97248640997f7cfb38da241df0ba # v2.9.1
+        with:
+          channel: stable
+          flutter-version: 3.41.9
+          cache: true
+
+      - name: Reject private backend material
+        shell: bash
+        run: |
+          test ! -e supabase
+          test ! -e cloudflare
+          test ! -e backend_modules
+          test ! -e app_account/test/local_supabase_sync_test.dart
+          ! git grep -n -E 'SUPABASE_SERVICE_ROLE_KEY|SERVICE_ROLE_KEY|BEGIN [A-Z ]*PRIVATE KEY|OPENAI_API_KEY=' -- app_account app_voice
+
+      - name: Check app_account
+        run: flutter pub get && flutter analyze && flutter test
+        working-directory: app_account
+
+      - name: Check app_voice
+        run: flutter pub get && flutter analyze && flutter test
+        working-directory: app_voice
