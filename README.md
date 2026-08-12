@@ -23,5 +23,10 @@ and production secrets are not part of this repository.
 
 ## License
 
-[PolyForm Noncommercial License 1.0.0](LICENSE). This repository is
-source-available, not OSI open source.
+Copyright © 2026 FinchForge LLC.
+
+This repository is open-source software licensed under the
+[GNU Affero General Public License v3.0 only](LICENSE) (`AGPL-3.0-only`).
+Alternative commercial licenses are available from FinchForge LLC.
+Contributions are accepted under the [Contributor License Agreement](CLA.md);
+see [CONTRIBUTING.md](CONTRIBUTING.md).
