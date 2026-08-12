@@ -32,6 +32,18 @@ jobs:
           test ! -e app_account/test/local_supabase_sync_test.dart
           ! git grep -n -E 'SUPABASE_SERVICE_ROLE_KEY|SERVICE_ROLE_KEY|BEGIN [A-Z ]*PRIVATE KEY|OPENAI_API_KEY=' -- app_account app_voice
 
+      - name: Check licensing boundary
+        shell: bash
+        run: |
+          test -f LICENSING.md
+          grep -Fq 'AGPL-3.0-only' LICENSING.md
+          grep -Fq 'Apple Standard EULA' LICENSING.md
+          grep -Fq 'FinchForge LLC' LICENSING.md
+          grep -Fq '[licensing model](LICENSING.md)' README.md
+          cmp -s LICENSE app_account/LICENSE
+          cmp -s LICENSE app_voice/LICENSE
+          ! git grep -nF 'PolyForm Noncommercial' -- ':!.github/workflows/client-validation.yml'
+
       - name: Check app_account
         run: flutter pub get && flutter analyze && flutter test
         working-directory: app_account

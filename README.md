@@ -27,6 +27,9 @@ Copyright © 2026 FinchForge LLC.
 
 This repository is open-source software licensed under the
 [GNU Affero General Public License v3.0 only](LICENSE) (`AGPL-3.0-only`).
-Alternative commercial licenses are available from FinchForge LLC.
+FinchForge LLC may incorporate these packages into official binaries under
+separate terms, including the Apple Standard EULA. See the
+[licensing model](LICENSING.md). Alternative commercial licenses are available
+from FinchForge LLC.
 Contributions are accepted under the [Contributor License Agreement](CLA.md);
 see [CONTRIBUTING.md](CONTRIBUTING.md).
