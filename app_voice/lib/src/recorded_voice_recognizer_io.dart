@@ -39,14 +39,14 @@ class RecordFileVoiceRecognizer
     }
     final directory = await getTemporaryDirectory();
     final path =
-        '${directory.path}/app_voice_${DateTime.now().microsecondsSinceEpoch}.m4a';
+        '${directory.path}/app_voice_${DateTime.now().microsecondsSinceEpoch}.wav';
     _path = path;
     final device = selectBuiltInInputDevice(
       await _recorder.listInputDevices(),
     );
     await _recorder.start(
       RecordConfig(
-        encoder: AudioEncoder.aacLc,
+        encoder: AudioEncoder.wav,
         sampleRate: 16000,
         numChannels: 1,
         device: device,
