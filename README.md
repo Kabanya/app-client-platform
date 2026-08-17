@@ -27,9 +27,9 @@ Copyright © 2026 FinchForge LLC.
 
 This repository is open-source software licensed under the
 [GNU Affero General Public License v3.0 only](LICENSE) (`AGPL-3.0-only`).
-FinchForge LLC may incorporate these packages into official binaries under
-separate terms, including the Apple Standard EULA. See the
-[licensing model](LICENSING.md). Alternative commercial licenses are available
-from FinchForge LLC.
+The packages and official client binaries that include them remain licensed
+under `AGPL-3.0-only`. Paid Pomodoist subscriptions cover hosted services and
+account entitlements, not a proprietary client license. See the
+[licensing model](LICENSING.md).
 Contributions are accepted under the [Contributor License Agreement](CLA.md);
 see [CONTRIBUTING.md](CONTRIBUTING.md).
