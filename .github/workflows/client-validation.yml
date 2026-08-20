@@ -37,7 +37,7 @@ jobs:
         run: |
           test -f LICENSING.md
           grep -Fq 'AGPL-3.0-only' LICENSING.md
-          grep -Fq 'Apple Standard EULA' LICENSING.md
+          ! grep -Fq 'Apple Standard EULA' LICENSING.md
           grep -Fq 'FinchForge LLC' LICENSING.md
           grep -Fq '[licensing model](LICENSING.md)' README.md
           cmp -s LICENSE app_account/LICENSE
