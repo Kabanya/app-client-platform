@@ -134,6 +134,7 @@ class AccountProfile {
     this.avatarUrl,
     this.revenueCatAppUserId,
     this.appleAppAccountToken,
+    this.pomodoistIsPro = false,
   });
 
   final String id;
@@ -142,6 +143,7 @@ class AccountProfile {
   final String? avatarUrl;
   final String? revenueCatAppUserId;
   final String? appleAppAccountToken;
+  final bool pomodoistIsPro;
 
   factory AccountProfile.fromJson(JsonMap json) {
     return AccountProfile(
@@ -155,6 +157,8 @@ class AccountProfile {
       appleAppAccountToken: _string(
         json['appleAppAccountToken'] ?? json['apple_app_account_token'],
       ),
+      pomodoistIsPro:
+          _bool(json['pomodoistIsPro'] ?? json['pomodoist_is_pro']) ?? false,
     );
   }
 
@@ -166,6 +170,7 @@ class AccountProfile {
       'avatarUrl': avatarUrl,
       'revenueCatAppUserId': revenueCatAppUserId,
       'appleAppAccountToken': appleAppAccountToken,
+      'pomodoistIsPro': pomodoistIsPro,
     };
   }
 }

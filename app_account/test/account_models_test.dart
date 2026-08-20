@@ -24,6 +24,7 @@ void main() {
         'displayName': 'Dev',
         'revenueCatAppUserId': 'user-1',
         'appleAppAccountToken': '11111111-1111-4111-8111-111111111111',
+        'pomodoistIsPro': true,
       },
       'apps': [
         {
@@ -67,9 +68,25 @@ void main() {
       overview.profile.toJson()['appleAppAccountToken'],
       '11111111-1111-4111-8111-111111111111',
     );
+    expect(overview.profile.pomodoistIsPro, isTrue);
+    expect(overview.profile.toJson()['pomodoistIsPro'], isTrue);
     expect(overview.apps.single.hasActiveEntitlement, isTrue);
     expect(overview.apps.single.usage.single.remaining, 88);
     expect(overview.apps.single.storage?.remainingBytes, 1073741819);
+  });
+
+  test('profile Pro flag accepts snake case and defaults safely', () {
+    expect(
+      AccountProfile.fromJson({
+        'id': 'snake-user',
+        'pomodoist_is_pro': true,
+      }).pomodoistIsPro,
+      isTrue,
+    );
+    expect(
+      AccountProfile.fromJson({'id': 'legacy-user'}).pomodoistIsPro,
+      isFalse,
+    );
   });
 
   test('sync operation serializes expected rpc payload', () {
