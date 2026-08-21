@@ -499,7 +499,11 @@ class AccountClient {
     RealtimeChannel? channel;
     late final StreamController<AccountSyncHint> controller;
     controller = StreamController<AccountSyncHint>(
-      onListen: () {
+      onListen: () async {
+        await _refreshRealtimeAuth();
+        if (!controller.hasListener) {
+          return;
+        }
         channel = _supabase.channel(
           AccountSyncHint.topicFor(userId: userId, appId: appId),
           opts: const RealtimeChannelConfig(private: true),
@@ -541,6 +545,7 @@ class AccountClient {
     if (userId == null) {
       return;
     }
+    await _refreshRealtimeAuth();
     final channel = _supabase.channel(
       AccountSyncHint.topicFor(userId: userId, appId: appId),
       opts: const RealtimeChannelConfig(private: true, ack: true),
@@ -557,6 +562,13 @@ class AccountClient {
       );
     } finally {
       await _supabase.removeChannel(channel);
+    }
+  }
+
+  Future<void> _refreshRealtimeAuth() async {
+    final token = _supabase.auth.currentSession?.accessToken;
+    if (token != null) {
+      await _supabase.realtime.setAuth(token);
     }
   }
 

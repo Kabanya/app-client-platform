@@ -223,6 +223,61 @@ void main() {
       ['/auth/v1/token', '/auth/v1/user'],
     );
   });
+
+  test('sync hint subscription refreshes the Realtime access token', () async {
+    final (:account, :supabase) = await _signedInRealtimeAccount();
+    final subscription = account
+        .syncHints(appId: AccountAppId.pomodoist)
+        .listen(null, onError: (_) {});
+
+    await Future<void>.delayed(Duration.zero);
+
+    expect(supabase.realtime.accessToken, 'test-access-token');
+    await subscription.cancel();
+  });
+
+  test('sync hint broadcast refreshes the Realtime access token', () async {
+    final (:account, :supabase) = await _signedInRealtimeAccount();
+    final completion = account
+        .broadcastSyncHint(
+          appId: AccountAppId.pomodoist,
+          deviceId: 'test-device',
+        )
+        .catchError((_) {});
+
+    await Future<void>.delayed(Duration.zero);
+
+    expect(supabase.realtime.accessToken, 'test-access-token');
+    await completion.timeout(
+      const Duration(milliseconds: 100),
+      onTimeout: () {},
+    );
+  });
+}
+
+Future<({AccountClient account, SupabaseClient supabase})>
+    _signedInRealtimeAccount() async {
+  final supabase = SupabaseClient(
+    'http://localhost:54321',
+    'anon-key',
+    authOptions: const AuthClientOptions(
+      autoRefreshToken: false,
+      authFlowType: AuthFlowType.implicit,
+    ),
+    realtimeClientOptions: RealtimeClientOptions(
+      timeout: const Duration(milliseconds: 10),
+      transport: (_, _) => throw StateError('WebSocket disabled in test'),
+    ),
+    httpClient: _RecordingHttpClient(authenticated: true),
+  );
+  final account = AccountClient.fromSupabaseClient(supabase);
+  await account.signInWithPassword(
+    email: 'dev@example.com',
+    password: 'password',
+  );
+  await Future<void>.delayed(Duration.zero);
+  supabase.realtime.accessToken = 'stale-token';
+  return (account: account, supabase: supabase);
 }
 
 AccountClient _accountClient(
